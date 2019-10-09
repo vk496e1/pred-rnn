@@ -21,20 +21,20 @@ class Encoder(nn.Module):
 		self.H = dict()
 
 		self.h = dict()
-        self.c = dict()
-        self.m = { 0 : Parameter(torch.Tensor())}
+		self.c = dict()
+		self.m = { 0 : Parameter(torch.Tensor())}
 
 
-        self.h[0] = Parameter(torch.Tensor(shape))
-        self.h[1] = Parameter(torch.Tensor(shape))
-        self.h[2] = Parameter(torch.Tensor(shape))
-        self.h[3] = Parameter(torch.Tensor(shape))
+		self.h[0] = Parameter(torch.Tensor(shape))
+		self.h[1] = Parameter(torch.Tensor(shape))
+		self.h[2] = Parameter(torch.Tensor(shape))
+		self.h[3] = Parameter(torch.Tensor(shape))
 
 
-        self.c[0] = Parameter(torch.Tensor(shape))
-        self.c[1] = Parameter(torch.Tensor(shape))
-        self.c[2] = Parameter(torch.Tensor(shape))
-        self.c[3] = Parameter(torch.Tensor(shape))
+		self.c[0] = Parameter(torch.Tensor(shape))
+		self.c[1] = Parameter(torch.Tensor(shape))
+		self.c[2] = Parameter(torch.Tensor(shape))
+		self.c[3] = Parameter(torch.Tensor(shape))
 
 		self.cells = nn.ModuleList([])
 		for i in self.n_layers:
@@ -44,9 +44,9 @@ class Encoder(nn.Module):
 		self._reset_parameters()
 
 	def _reset_parameters(self):
-        stdv = 1.0 / math.sqrt(self.hidden_size)
-        for weight in self.parameters():
-            weight.data.uniform_(-stdv, stdv)
+		stdv = 1.0 / math.sqrt(self.hidden_size)
+		for weight in self.parameters():
+			weight.data.uniform_(-stdv, stdv)
 
 
 	def forward(self, input_, first_timestep = False):
@@ -68,11 +68,11 @@ class Encoder(nn.Module):
 		return self.H , self. C, self.M
 
 	def initHidden(self):
-        result = Variable(torch.zeros(1, 1, self.hidden_size)) #################SHAPE
-        if use_cuda:
-            return result.cuda()
-        else:
-            return result
+		result = Variable(torch.zeros(1, 1, self.hidden_size)) #################SHAPE
+		if use_cuda:
+			return result.cuda()
+		else:
+			return result
 
 
 class Decoder(nn.Module):
@@ -105,8 +105,8 @@ class Decoder(nn.Module):
 		return output
 
 	def initHidden(self):
-        result = Variable(torch.zeros(1, 1, self.hidden_size))
-        if use_cuda:
-            return result.cuda()
-        else:
-            return result
+		result = Variable(torch.zeros(1, 1, self.hidden_size))
+		if use_cuda:
+			return result.cuda()
+		else:
+			return result

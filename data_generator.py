@@ -21,7 +21,7 @@ class BouncingMNISTDataHandler(object):
     try:
       f = h5py.File('/home/ujjax/Downloads/mnist.h5')
     except:
-      print 'Please set the correct path to MNIST dataset'
+      print('Please set the correct path to MNIST dataset')
       sys.exit()
 
     self.data_ = f['train'].value.reshape(-1, 28, 28)
@@ -152,7 +152,7 @@ class BouncingMNISTDataHandler(object):
       plt.axis('off')
     plt.draw()
     if output_file1 is not None:
-      print output_file1
+      print(output_file1)
       plt.savefig(output_file1, bbox_inches='tight')
 
     # create figure for reconstuction and future sequences
@@ -168,7 +168,7 @@ class BouncingMNISTDataHandler(object):
       plt.axis('off')
     plt.draw()
     if output_file2 is not None:
-      print output_file2
+      print(output_file2)
       plt.savefig(output_file2, bbox_inches='tight')
     else:
       plt.pause(0.1)

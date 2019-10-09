@@ -15,7 +15,8 @@ import numpy as np
 
 SOS_token = 0
 EOS_token = 1
-
+FILE_PATH = '' #¿?
+MAX_LENGTH = '' #¿?¿?
 
 def showPlot(points):
     plt.figure()
@@ -41,9 +42,9 @@ def timeSince(since, percent):
 
 
 def train(input_variable, target_variable, encoder, decoder, encoder_optimizer, decoder_optimizer, criterion, max_length=MAX_LENGTH,teacher_forcing_ratio = 0.5):
-	encoder_hidden = encoder.initHidden()
+    encoder_hidden = encoder.initHidden()
 
-	encoder_optimizer.zero_grad()
+    encoder_optimizer.zero_grad()
     decoder_optimizer.zero_grad()
 
     input_length = input_variable.size()[0]
@@ -76,10 +77,10 @@ def train(input_variable, target_variable, encoder, decoder, encoder_optimizer, 
 
     else:
     	for di in range(target_length):
-    		decoder_output, decoder_hidden, decoder_attention = decoder(
+            decoder_output, decoder_hidden, decoder_attention = decoder(
                 decoder_input, decoder_hidden, encoder_outputs)
 
-    		topv, topi = decoder_output.data.topk(1)
+            topv, topi = decoder_output.data.topk(1)
             ni = topi[0][0]
 
             decoder_input = Variable(torch.LongTensor([[ni]]))
@@ -98,10 +99,10 @@ def train(input_variable, target_variable, encoder, decoder, encoder_optimizer, 
 
 
 def trainIters(encoder, decoder, n_iters,data_generator, print_every=1000, plot_every=100, learning_rate=0.01):
-	start_time = time.time()
+    start_time = time.time()
 
 
-	encoder_optimizer = optim.SGD(encoder.parameters(), lr=learning_rate)
+    encoder_optimizer = optim.SGD(encoder.parameters(), lr=learning_rate)
     decoder_optimizer = optim.SGD(decoder.parameters(), lr=learning_rate)
     
     training_pairs = [variablesFromPair(random.choice(pairs))
@@ -112,7 +113,7 @@ def trainIters(encoder, decoder, n_iters,data_generator, print_every=1000, plot_
 
 
     for it in range(1, n_iters+1):
-		training_pair = next(data_generator)
+        training_pair = next(data_generator)
         input_variable = training_pair[0]
         target_variable = training_pair[1]
 
@@ -176,23 +177,23 @@ def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
 
 
 def main(_):
-	batch_size = 128
-	file_path = #####
+    batch_size = 128
+    file_path = FILE_PATH
 
-	data = prepare_data.load_data(file_path)
+    data = prepare_data.load_data(file_path)
 
-	data_generator = prepare_data.get_batches(data, batch_size)
+    data_generator = prepare_data.get_batches(data, batch_size)
 
-	hidden_size = 256
-	encoder1 = Encoder(input_lang.n_words, hidden_size)
-	decoder1 = Decoder(hidden_size, output_lang.n_words, dropout_p=0.1)
+    hidden_size = 256
+    encoder1 = Encoder(input_lang.n_words, hidden_size)
+    decoder1 = Decoder(hidden_size, output_lang.n_words, dropout_p=0.1)
 
 
-	if use_cuda:
-	    encoder1 = encoder1.cuda()
-	    attn_decoder1 = decoder1.cuda()
+    if use_cuda:
+        encoder1 = encoder1.cuda()
+        attn_decoder1 = decoder1.cuda()
 
-	trainIters(encoder1, decoder1, 75000, print_every=5000)
+    trainIters(encoder1, decoder1, 75000, print_every=5000)
 
 
 if __name__ == '__main__':

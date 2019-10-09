@@ -9,6 +9,8 @@ from torch.nn import Parameter
 
 import math
 
+DIM_value = "" #?
+
 class SpatioTemporal_LSTM(nn.Module):
     """docstring for SpatioTemporal_LSTM"""
     def __init__(self, hidden_size, input_size):
@@ -70,7 +72,7 @@ class SpatioTemporal_LSTM(nn.Module):
 
         o = torch.sigmoid(F.conv2d(x, self.weight_xo) + F.conv2d(M, self.weight_mo) + F.conv2d(c, self.weight_co) + F.conv2d(h, self.weight_ho) + self.bias_o)
 
-        h = o * torch.tanh(F.conv2d(torch.cat((c,M), dim= ),self.weight_1x1))
+        h = o * torch.tanh(F.conv2d(torch.cat((c,M), dim=DIM_value ),self.weight_1x1))
 
         return h,c,M
 
